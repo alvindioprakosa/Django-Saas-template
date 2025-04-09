@@ -1,6 +1,18 @@
-{% extends "base.html" %} {% block content %}
-<h2>{{course.title}}</h2>
-<p><strong>Instructor:</strong> {{course.instructor.username}}</p>
-<p></p>
-<p>{{course.content}}</p>
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h2 class="card-title">{{ course.title }}</h2>
+      <p class="text-muted">
+        <strong>Instructor:</strong> {{ course.instructor.username }}
+      </p>
+      <hr />
+      <div class="card-text">
+        {{ course.content|linebreaks }}
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
