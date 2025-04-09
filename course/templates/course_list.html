@@ -1,21 +1,37 @@
-{% extends "base.html" %} {% block content %}
-<h2>Courses</h2>
+{% extends "base.html" %}
 
-{% for course in courses %}
-<div class="card p-2 d-flex flex-row align-items-center">
-  <div class="col-10">{{course.title}} - {{course.price}} USD</div>
-  <div class="col-2">
-    {% if course.is_unlocked %}
-    <a class="btn btn-success" href="{% url 'course_detail' course.id %}"
-      >View Course</a
-    >
-    {% else %}
-    <a
-      class="btn btn-danger"
-      href="{% url 'create_checkout_session' course.id %}"
-      >Buy Course</a
-    >
-    {% endif %}
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4">Available Courses</h2>
+
+  {% for course in courses %}
+  <div class="card mb-3 shadow-sm">
+    <div class="card-body d-flex justify-content-between align-items-center">
+      <div>
+        <h5 class="card-title mb-1">{{ course.title }}</h5>
+        <p class="card-text text-muted mb-0">{{ course.price }} USD</p>
+      </div>
+
+      <div>
+        {% if course.is_unlocked %}
+        <a class="btn btn-success" href="{% url 'course_detail' course.id %}">
+          View Course
+        </a>
+        {% else %}
+        <a
+          class="btn btn-danger"
+          href="{% url 'create_checkout_session' course.id %}"
+        >
+          Buy Course
+        </a>
+        {% endif %}
+      </div>
+    </div>
   </div>
+  {% empty %}
+  <div class="alert alert-info">
+    No courses available at the moment.
+  </div>
+  {% endfor %}
 </div>
-{% endfor %} {% endblock %}
+{% endblock %}
