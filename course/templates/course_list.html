@@ -14,24 +14,15 @@
 
       <div>
         {% if course.is_unlocked %}
-        <a class="btn btn-success" href="{% url 'course_detail' course.id %}">
-          View Course
-        </a>
+        <a class="btn btn-success" href="{% url 'course_detail' course.id %}">View Course</a>
         {% else %}
-        <a
-          class="btn btn-danger"
-          href="{% url 'create_checkout_session' course.id %}"
-        >
-          Buy Course
-        </a>
+        <a class="btn btn-danger" href="{% url 'create_checkout_session' course.id %}">Buy Course</a>
         {% endif %}
       </div>
     </div>
   </div>
   {% empty %}
-  <div class="alert alert-info">
-    No courses available at the moment.
-  </div>
+  <div class="alert alert-info">No courses available at the moment.</div>
   {% endfor %}
 </div>
 {% endblock %}
