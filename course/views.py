@@ -6,29 +6,18 @@ from .models import Course
 def course_list(request):
     courses = Course.objects.all()
 
-    if request.user.is_authenticated:
-        for course in courses:
-            course.is_unlocked = request.user in course.subscribers.all()
-    else:
-        for course in courses:
-            course.is_unlocked = False
-    
-    context = {
-        "courses": courses
-    }
+    # Tambahkan atribut dinamis `is_unlocked` untuk tiap course
+    for course in courses:
+        course.is_unlocked = request.user in course.subscribers.all()
 
-    return render(request, "course_list.html", context)
-
+    return render(request, "course_list.html", {"courses": courses})
 
 @login_required
 def course_detail(request, course_id):
     course = get_object_or_404(Course, id=course_id)
 
+    # Hanya subscriber yang boleh lihat detail kursus
     if request.user not in course.subscribers.all():
         return redirect("course_list")
 
-    context = {
-        "course": course
-    }
-
-    return render(request, "course_detail.html", context)
+    return render(request, "course_detail.html", {"course": course})
