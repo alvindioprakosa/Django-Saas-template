@@ -2,15 +2,19 @@
 
 {% block content %}
 <div class="container mt-4">
+  <div class="mb-3">
+    <a href="{% url 'course_list' %}" class="btn btn-sm btn-secondary">← Back to Courses</a>
+  </div>
+
   <div class="card shadow-sm">
     <div class="card-body">
-      <h2 class="card-title">{{ course.title }}</h2>
+      <h2 class="card-title">{{ course.title|default:"Untitled Course" }}</h2>
       <p class="text-muted">
-        <strong>Instructor:</strong> {{ course.instructor.username }}
+        <strong>Instructor:</strong> {{ course.instructor.username|default:"Unknown" }}
       </p>
       <hr />
       <div class="card-text">
-        {{ course.content|linebreaks }}
+        {{ course.content|default:"<em>No content available.</em>"|linebreaks }}
       </div>
     </div>
   </div>
